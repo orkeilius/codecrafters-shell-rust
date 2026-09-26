@@ -3,6 +3,7 @@
 pub mod external_command;
 
 use std::io::{self, Write};
+use std::process::Command;
 use crate::external_command::find_external_command_path;
 
 fn main() {
@@ -34,7 +35,7 @@ fn parse_input(input: &str) {
         "exit" => std::process::exit(0),
         "echo" => println!("{}", arg[1..].join(" ")),
         "type" => type_command(&arg),
-        _ => println!("{}: command not found",input.trim())
+        _ => run_external_command(arg[0],&arg[1..])
     }
 
 }
@@ -53,6 +54,18 @@ fn type_command(arg: &[&str]){
          Some(path) => println!("{command_name} is {path}"),
          _ => println!("{command_name}: not found")
      }
-
-
 }
+
+fn run_external_command(command: &str, arg: &[&str]){
+
+    let possible_path = find_external_command_path(&command);
+
+    if possible_path.is_none() {
+        println!("{}: command not found",command.trim());
+        return;
+    }
+    let output = Command::new(command).args(arg).output().unwrap();
+    io::stdout().write_all(&output.stdout).unwrap();
+    io::stderr().write_all(&output.stderr).unwrap();
+}
+
