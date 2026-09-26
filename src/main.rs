@@ -27,9 +27,10 @@ fn parse_input(input: &str) {
 
     let arg = input.trim().split(' ').collect::<Vec<&str>>();
 
-    if arg[0] == "exit"{
-        std::process::exit(0);
+    match arg[0]{
+        "exit" => std::process::exit(0),
+        "echo" => println!("{}", arg[1..].join(" ")),
+        _ => println!("{}: command not found",input.trim())
     }
 
-    println!("{}: command not found",input.trim());
 }
