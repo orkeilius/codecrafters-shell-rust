@@ -1,5 +1,7 @@
 use std::env;
+use std::fs::File;
 use std::path::{PathBuf};
+use std::os::unix::fs::PermissionsExt;
 
 pub fn find_external_command_path(name: &str) -> Option<String> {
     for path in get_path_dirs() {
@@ -21,8 +23,12 @@ fn get_path_dirs() -> Vec<PathBuf> {
 fn find_command_in_paths(command: &str, path: PathBuf) -> Option<PathBuf> {
 
     let theorical_path = path.join(command);
-    if theorical_path.exists() {
-        return Some(theorical_path);
+    if !theorical_path.exists()  {
+        return None
     }
-    None
+    let metadata = File::open(theorical_path.to_str()?).ok()?.metadata().ok()?;
+    let is_executable =  metadata.permissions().mode() & 0o111 != 0;
+    if !is_executable {return None}
+
+    Some(theorical_path)
 }

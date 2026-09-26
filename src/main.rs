@@ -45,11 +45,11 @@ fn type_command(arg: &[&str]){
 
     if LIST_OF_BUILTIN_COMMAND.contains(&command_name.as_str()){
         println!("{command_name} is a shell builtin");
+        return;
     }
 
     let possible_path = find_external_command_path(&command_name);
-
-     match possible_path {
+    match possible_path {
          Some(path) => println!("{command_name} is {path}"),
          _ => println!("{command_name}: not found")
      }
