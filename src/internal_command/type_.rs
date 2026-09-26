@@ -1,5 +1,5 @@
 use crate::external_command::find_external_command_path;
-use crate::internalCommand::internal_command::{InternalCommand, COMMAND_LIST};
+use crate::internal_command::internal_command::{InternalCommand, COMMAND_LIST};
 
 pub struct Type_;
 
@@ -21,6 +21,6 @@ impl InternalCommand for Type_ {
             return;
         }
 
-        println!("{command_name}: not found")
+        println!("{command_name}: not found");
     }
 }

@@ -1,4 +1,4 @@
-use crate::internalCommand::internal_command::InternalCommand;
+use crate::internal_command::internal_command::InternalCommand;
 
 pub struct Echo;
 
@@ -8,7 +8,7 @@ impl InternalCommand for Echo {
     }
 
     fn run(&self, arg: &[&str]) {
-        println!("{}", arg.join(" "))
+        println!("{}", arg.join(" "));
     }
 
 }

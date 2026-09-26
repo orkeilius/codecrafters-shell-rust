@@ -1,4 +1,4 @@
-use crate::internalCommand::internal_command::InternalCommand;
+use crate::internal_command::internal_command::InternalCommand;
 use std::env;
 use std::io::ErrorKind::{InvalidData, NotFound};
 use std::path::Path;

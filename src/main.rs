@@ -1,12 +1,12 @@
 #![deny(clippy::pedantic)]
 
 pub mod external_command;
-pub mod internalCommand;
+pub mod internal_command;
 
 use crate::external_command::find_external_command_path;
 use std::io::{self, Write};
 use std::process::Command;
-use crate::internalCommand::internal_command::get_command;
+use crate::internal_command::internal_command::get_command;
 
 fn main() {
     loop {
@@ -31,9 +31,9 @@ fn prompt() {
 
 fn parse_input(input: &str) {
 
-    let args = input.trim().split_whitespace().collect::<Vec<&str>>();
+    let args = input.split_whitespace().collect::<Vec<&str>>();
 
-    let command = args.get(0).unwrap_or(&"");
+    let command = args.first().unwrap_or(&"");
     if command.is_empty() {
         return;
     }
@@ -43,14 +43,14 @@ fn parse_input(input: &str) {
         return;
     }
 
-    run_external_command(args[0],&args[1..])
+    run_external_command(args[0],&args[1..]);
 
 }
 
 
 fn run_external_command(command: &str, arg: &[&str]){
 
-    let possible_path = find_external_command_path(&command);
+    let possible_path = find_external_command_path(command);
 
     if possible_path.is_none() {
         println!("{}: command not found",command.trim());

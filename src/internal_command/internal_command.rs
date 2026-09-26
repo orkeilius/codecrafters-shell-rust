@@ -1,8 +1,8 @@
-use crate::internalCommand::cd::Cd;
-use crate::internalCommand::type_::{Type_};
-use crate::internalCommand::echo::Echo;
-use crate::internalCommand::exit::Exit;
-use crate::internalCommand::pwd::Pwd;
+use crate::internal_command::cd::Cd;
+use crate::internal_command::type_::{Type_};
+use crate::internal_command::echo::Echo;
+use crate::internal_command::exit::Exit;
+use crate::internal_command::pwd::Pwd;
 
 pub trait InternalCommand {
     fn get_name(&self) -> &'static str;
