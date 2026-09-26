@@ -3,3 +3,4 @@ pub mod echo;
 pub mod exit;
 pub mod type_;
 pub mod pwd;
+pub mod cd;

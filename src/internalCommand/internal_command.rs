@@ -1,3 +1,4 @@
+use crate::internalCommand::cd::Cd;
 use crate::internalCommand::type_::{Type_};
 use crate::internalCommand::echo::Echo;
 use crate::internalCommand::exit::Exit;
@@ -9,6 +10,7 @@ pub trait InternalCommand {
 }
 
 pub const COMMAND_LIST: &[&dyn InternalCommand] = &[
+    &Cd,
     &Echo,
     &Exit,
     &Pwd,
