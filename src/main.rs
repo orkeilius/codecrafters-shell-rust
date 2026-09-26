@@ -1,12 +1,11 @@
-#[allow(unused_imports)]
+#![deny(clippy::pedantic)]
+
 use std::io::{self, Write};
 
 fn main() {
     loop {
         prompt();
     }
-
-
 }
 
 fn prompt() {
@@ -16,16 +15,21 @@ fn prompt() {
     let mut input = String::new();
     match io::stdin().read_line(&mut input) {
         Err(e) => {
-            eprintln!("Error reading input: {}", e);
+            eprintln!("Error reading input: {e}");
         }
         Ok(_) => {
-            parse_input(input);
+            parse_input(&input);
         }
     }
 }
 
-fn parse_input(input: String) {
+fn parse_input(input: &str) {
 
+    let arg = input.trim().split(' ').collect::<Vec<&str>>();
+
+    if arg[0] == "exit"{
+        std::process::exit(0);
+    }
 
     println!("{}: command not found",input.trim());
 }
