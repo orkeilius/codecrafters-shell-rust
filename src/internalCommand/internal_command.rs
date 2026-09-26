@@ -1,6 +1,7 @@
 use crate::internalCommand::type_::{Type_};
 use crate::internalCommand::echo::Echo;
 use crate::internalCommand::exit::Exit;
+use crate::internalCommand::pwd::Pwd;
 
 pub trait InternalCommand {
     fn get_name(&self) -> &'static str;
@@ -10,6 +11,7 @@ pub trait InternalCommand {
 pub const COMMAND_LIST: &[&dyn InternalCommand] = &[
     &Echo,
     &Exit,
+    &Pwd,
     &Type_,
 ];
 
