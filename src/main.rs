@@ -2,7 +2,9 @@
 use std::io::{self, Write};
 
 fn main() {
-    prompt();
+    loop {
+        prompt();
+    }
 
 
 }
@@ -23,6 +25,7 @@ fn prompt() {
 }
 
 fn parse_input(input: String) {
+
 
     println!("{}: command not found",input.trim());
 }
