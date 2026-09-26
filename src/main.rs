@@ -30,7 +30,20 @@ fn parse_input(input: &str) {
     match arg[0]{
         "exit" => std::process::exit(0),
         "echo" => println!("{}", arg[1..].join(" ")),
+        "type" => type_command(&arg),
         _ => println!("{}: command not found",input.trim())
+    }
+
+}
+
+const LIST_OF_BUILTIN_COMMAND: [&str; 3] = ["exit" ,"echo","type"];
+fn type_command(arg: &[&str]){
+    let command_name = arg[1..].join(" ");
+
+    if LIST_OF_BUILTIN_COMMAND.contains(&command_name.as_str()){
+        println!("{command_name} is a shell builtin");
+    } else {
+        println!("{command_name}: not found");
     }
 
 }
