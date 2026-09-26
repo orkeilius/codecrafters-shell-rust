@@ -1,10 +1,12 @@
 #![deny(clippy::pedantic)]
 
 pub mod external_command;
+pub mod internalCommand;
 
+use crate::external_command::find_external_command_path;
 use std::io::{self, Write};
 use std::process::Command;
-use crate::external_command::find_external_command_path;
+use crate::internalCommand::internal_command::get_command;
 
 fn main() {
     loop {
@@ -29,32 +31,22 @@ fn prompt() {
 
 fn parse_input(input: &str) {
 
-    let arg = input.trim().split_whitespace().collect::<Vec<&str>>();
+    let args = input.trim().split_whitespace().collect::<Vec<&str>>();
 
-    match arg[0]{
-        "exit" => std::process::exit(0),
-        "echo" => println!("{}", arg[1..].join(" ")),
-        "type" => type_command(&arg),
-        _ => run_external_command(arg[0],&arg[1..])
-    }
-
-}
-
-const LIST_OF_BUILTIN_COMMAND: [&str; 3] = ["exit" ,"echo","type"];
-fn type_command(arg: &[&str]){
-    let command_name = arg[1..].join(" ");
-
-    if LIST_OF_BUILTIN_COMMAND.contains(&command_name.as_str()){
-        println!("{command_name} is a shell builtin");
+    let command = args.get(0).unwrap_or(&"");
+    if command.is_empty() {
         return;
     }
 
-    let possible_path = find_external_command_path(&command_name);
-    match possible_path {
-         Some(path) => println!("{command_name} is {path}"),
-         _ => println!("{command_name}: not found")
-     }
+    if let Some(internal_command) = get_command(command) {
+        internal_command.run(&args[1..]);
+        return;
+    }
+
+    run_external_command(args[0],&args[1..])
+
 }
+
 
 fn run_external_command(command: &str, arg: &[&str]){
 
