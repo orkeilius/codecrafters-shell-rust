@@ -3,10 +3,11 @@ use crate::internal_command::type_::{Type_};
 use crate::internal_command::echo::Echo;
 use crate::internal_command::exit::Exit;
 use crate::internal_command::pwd::Pwd;
+use crate::logger::Logger;
 
 pub trait InternalCommand {
     fn get_name(&self) -> &'static str;
-    fn run(&self,args: &[&str]);
+    fn run(&self,args: &[&str],logger: &dyn Logger);
 }
 
 pub const COMMAND_LIST: &[&dyn InternalCommand] = &[

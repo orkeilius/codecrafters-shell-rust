@@ -2,6 +2,7 @@ use crate::internal_command::internal_command::InternalCommand;
 use std::env;
 use std::io::ErrorKind::{InvalidData, NotFound};
 use std::path::Path;
+use crate::logger::Logger;
 
 pub struct Cd;
 
@@ -10,10 +11,10 @@ impl InternalCommand for Cd {
         "cd"
     }
 
-    fn run(&self, arg: &[&str]) {
+    fn run(&self, arg: &[&str],logger: &dyn Logger) {
         let raw_path = arg.first().unwrap_or(&"");
         if change_dir(raw_path).is_err() {
-            println!("cd: {raw_path}: No such file or directory");
+            logger.println(&format!("cd: {raw_path}: No such file or directory"));
         }
     }
 }

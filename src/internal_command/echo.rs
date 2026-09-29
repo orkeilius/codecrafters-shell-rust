@@ -1,4 +1,5 @@
 use crate::internal_command::internal_command::InternalCommand;
+use crate::logger::Logger;
 
 pub struct Echo;
 
@@ -7,8 +8,8 @@ impl InternalCommand for Echo {
         "echo"
     }
 
-    fn run(&self, arg: &[&str]) {
-        println!("{}", arg.join(" "));
+    fn run(&self, arg: &[&str],logger: &dyn Logger) {
+        logger.println(&format!("{}", arg.join(" ")));
     }
 
 }
